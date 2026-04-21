@@ -1,13 +1,19 @@
 from __future__ import annotations
 
+import os
+import sys
 import json
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-import joblib
 import pandas as pd
 import streamlit as st
 
+sys.path.append(os.path.abspath("."))
+
+# Ensure joblib can resolve custom pipeline module references on load (Streamlit Cloud-safe).
+from src.brand_loyalty import data  # noqa: F401
+from src.brand_loyalty import preprocessing  # noqa: F401
 from src.brand_loyalty.config import CFG
 from src.brand_loyalty.data import canonicalize_features
 from src.brand_loyalty.train import train
@@ -60,12 +66,30 @@ def _feature_columns_for_mode(target_mode: str) -> List[str]:
     return CFG.all_feature_columns
 
 
+def load_model(model_path: str | Path):
+    import joblib
+    import traceback
+
+    try:
+        return joblib.load(model_path)
+    except Exception as e:
+        st.error("Model loading failed")
+        st.text(str(e))
+        st.text(traceback.format_exc())
+        raise e
+
+
 def _predict_with_confidence(input_dict: Dict[str, Any], *, model_path: Path, target_mode: str) -> Tuple[str, float]:
-    pipeline = joblib.load(model_path)
+    pipeline = load_model(model_path)
     feature_columns = _feature_columns_for_mode(target_mode)
     X = canonicalize_features(pd.DataFrame([input_dict], columns=feature_columns))[feature_columns]
-    proba = pipeline.predict_proba(X)[0]
-    pred_id = int(pipeline.predict(X)[0])
+    try:
+        proba = pipeline.predict_proba(X)[0]
+        pred_id = int(pipeline.predict(X)[0])
+    except Exception as e:
+        st.error("Prediction failed")
+        st.text(str(e))
+        raise
     if target_mode == "loyalty":
         label = CFG.loyalty_binary_id_to_name[pred_id]
     else:
@@ -137,7 +161,10 @@ def main() -> None:
         st.header("Pipeline Control")
         objective = st.selectbox("Prediction Objective", ["Brand Loyalty", "Price Sensitivity"], index=0)
         target_mode = "loyalty" if objective == "Brand Loyalty" else "price_sensitivity"
-        model_path = ARTIFACTS_DIR / "models" / f"{target_mode}_best_model.joblib"
+        if target_mode == "price_sensitivity":
+            model_path = ARTIFACTS_DIR / "models" / "price_sensitivity_best_model.joblib"
+        else:
+            model_path = ARTIFACTS_DIR / "models" / "best_model.joblib"
         report_path = ARTIFACTS_DIR / "reports" / f"{target_mode}_project_experiment_metadata.json"
         st.write(f"Dataset: `{DATASET_PATH.as_posix()}`")
         st.write(f"Model: `{model_path.as_posix()}`")
@@ -155,6 +182,9 @@ def main() -> None:
     left, right = st.columns([2, 3], gap="large")
 
     with left:
+        if not os.path.exists(model_path):
+            st.error(f"Model file not found: {model_path.as_posix()}")
+            st.stop()
         inputs = build_form(options, target_mode=target_mode)
         button_text = "Predict Loyalty" if target_mode == "loyalty" else "Predict Price Sensitivity"
         pred_key = f"pred_{target_mode}"
