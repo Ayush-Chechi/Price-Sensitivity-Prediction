@@ -1,0 +1,26 @@
+{
+  "n_samples": 500,
+  "n_features": 8,
+  "class_distribution": {
+    "0": 213,
+    "1": 287
+  },
+  "class_balance_ratio": 1.3474,
+  "missing_percentage_by_feature": {
+    "Usage Duration": 0.0,
+    "Discount Influence": 0.0,
+    "Social Engagement": 0.0,
+    "Experience": 0.0,
+    "Peer Influence": 0.0,
+    "Brand": 0.0,
+    "Decision Factor": 0.0,
+    "Price Importance": 0.0
+  },
+  "top_5_brands": {
+    "Poco": 52,
+    "Google Pixel": 48,
+    "Realme": 47,
+    "Vivo": 46,
+    "Samsung": 42
+  }
+}

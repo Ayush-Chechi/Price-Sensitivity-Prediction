@@ -1,0 +1,165 @@
+{
+  "created_at": "2026-04-21T08:47:29.738674+00:00",
+  "dataset": "data/new_dataset.xlsx",
+  "dataset_samples": 500,
+  "dataset_features": 7,
+  "leakage_free": true,
+  "excluded_feature": "Next Purchase Decision",
+  "target_mode": "price_sensitivity",
+  "target": "Price Sensitive (1) vs Not Price Sensitive (0)",
+  "models_baseline": [
+    {
+      "Model": "Logistic Regression",
+      "Accuracy": 0.52,
+      "F1": 0.4418604651162791,
+      "Precision": 0.36538461538461536,
+      "Recall": 0.5588235294117647,
+      "ROC-AUC": 0.5581550802139037,
+      "CV Score": 0.462,
+      "CV Std": 0.03544009029333871,
+      "composite": 0.4715171524781648
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.6,
+      "F1": 0.23076923076923078,
+      "Precision": 0.3333333333333333,
+      "Recall": 0.17647058823529413,
+      "ROC-AUC": 0.47838680926916216,
+      "CV Score": 0.5720000000000001,
+      "CV Std": 0.05268775948927796,
+      "composite": 0.33514328808446453
+    },
+    {
+      "Model": "Gradient Boosting",
+      "Accuracy": 0.59,
+      "F1": 0.16326530612244897,
+      "Precision": 0.26666666666666666,
+      "Recall": 0.11764705882352941,
+      "ROC-AUC": 0.47571301247771836,
+      "CV Score": 0.5519999999999999,
+      "CV Std": 0.03187475490101844,
+      "composite": 0.28439475790316127
+    },
+    {
+      "Model": "Extra Trees",
+      "Accuracy": 0.53,
+      "F1": 0.14545454545454545,
+      "Precision": 0.19047619047619047,
+      "Recall": 0.11764705882352941,
+      "ROC-AUC": 0.47058823529411764,
+      "CV Score": 0.556,
+      "CV Std": 0.05885575587824865,
+      "composite": 0.24589444868856636
+    }
+  ],
+  "top_2_models": [
+    "Logistic Regression",
+    "Random Forest"
+  ],
+  "models": [
+    {
+      "Model": "Logistic Regression",
+      "Accuracy": 0.61,
+      "F1": 0.4507042253521127,
+      "Precision": 0.43243243243243246,
+      "Recall": 0.47058823529411764,
+      "ROC-AUC": 0.5746434937611409,
+      "CV Score": 0.538,
+      "CV Std": 0.03969886648255841,
+      "composite": 0.49093122326966565
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.58,
+      "F1": 0.19230769230769232,
+      "Precision": 0.2777777777777778,
+      "Recall": 0.14705882352941177,
+      "ROC-AUC": 0.4877450980392157,
+      "CV Score": 0.584,
+      "CV Std": 0.0463033476111609,
+      "composite": 0.29928607340372043
+    }
+  ],
+  "top2_comparison": [
+    {
+      "Model": "Logistic Regression",
+      "Accuracy Before": 0.52,
+      "Accuracy After": 0.61,
+      "F1 Before": 0.4418604651162791,
+      "F1 After": 0.4507042253521127,
+      "Precision Before": 0.36538461538461536,
+      "Precision After": 0.43243243243243246,
+      "Recall Before": 0.5588235294117647,
+      "Recall After": 0.47058823529411764,
+      "Composite Before": 0.4715171524781648,
+      "Composite After": 0.49093122326966565
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy Before": 0.6,
+      "Accuracy After": 0.58,
+      "F1 Before": 0.23076923076923078,
+      "F1 After": 0.19230769230769232,
+      "Precision Before": 0.3333333333333333,
+      "Precision After": 0.2777777777777778,
+      "Recall Before": 0.17647058823529413,
+      "Recall After": 0.14705882352941177,
+      "Composite Before": 0.33514328808446453,
+      "Composite After": 0.29928607340372043
+    }
+  ],
+  "best_model": "Logistic Regression (Tuned)",
+  "best_model_artifact": "models/logistic_regression_tuned.joblib",
+  "best_model_target_artifact": "models/price_sensitivity_best_model.joblib",
+  "best_accuracy": 0.61,
+  "best_f1": 0.4507042253521127,
+  "best_params": {
+    "model__solver": "lbfgs",
+    "model__C": 0.01
+  },
+  "tuning_params": {
+    "Random Forest": {
+      "model__n_estimators": 500,
+      "model__min_samples_split": 2,
+      "model__min_samples_leaf": 1,
+      "model__max_features": "sqrt",
+      "model__max_depth": 12
+    },
+    "Logistic Regression": {
+      "model__solver": "lbfgs",
+      "model__C": 0.01
+    }
+  },
+  "rf_top_features": [],
+  "eda_summary": {
+    "n_samples": 500,
+    "n_features": 7,
+    "class_distribution": {
+      "0": 329,
+      "1": 171
+    },
+    "class_balance_ratio": 0.5198,
+    "missing_percentage_by_feature": {
+      "Usage Duration": 0.0,
+      "Discount Influence": 0.0,
+      "Social Engagement": 0.0,
+      "Experience": 0.0,
+      "Peer Influence": 0.0,
+      "Brand": 0.0,
+      "Decision Factor": 0.0
+    },
+    "top_5_brands": {
+      "Poco": 52,
+      "Google Pixel": 48,
+      "Realme": 47,
+      "Vivo": 46,
+      "Samsung": 42
+    }
+  },
+  "overfitting_check": {
+    "train_accuracy_best": 0.57,
+    "test_accuracy_best": 0.61
+  },
+  "model_selection_justification": "Logistic Regression (Tuned) achieved the highest held-out test accuracy; composite score was used as a tie-breaker."
+}

@@ -1,0 +1,166 @@
+{
+  "created_at": "2026-04-21T08:50:30.040404+00:00",
+  "dataset": "data/new_dataset.xlsx",
+  "dataset_samples": 500,
+  "dataset_features": 8,
+  "leakage_free": true,
+  "excluded_feature": "Next Purchase Decision",
+  "target_mode": "loyalty",
+  "target": "Loyal (1) vs Not Loyal (0)",
+  "models_baseline": [
+    {
+      "Model": "Gradient Boosting",
+      "Accuracy": 0.9,
+      "F1": 0.9180327868852459,
+      "Precision": 0.8615384615384616,
+      "Recall": 0.9824561403508771,
+      "ROC-AUC": 0.9534883720930233,
+      "CV Score": 0.874,
+      "CV Std": 0.02059126028197402,
+      "composite": 0.9155068471936462
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.89,
+      "F1": 0.912,
+      "Precision": 0.8382352941176471,
+      "Recall": 1.0,
+      "ROC-AUC": 0.9359445124439003,
+      "CV Score": 0.876,
+      "CV Std": 0.016248076809271934,
+      "composite": 0.9100588235294118
+    },
+    {
+      "Model": "Extra Trees",
+      "Accuracy": 0.89,
+      "F1": 0.9105691056910569,
+      "Precision": 0.8484848484848485,
+      "Recall": 0.9824561403508771,
+      "ROC-AUC": 0.9357405140758874,
+      "CV Score": 0.8640000000000001,
+      "CV Std": 0.022449944320643664,
+      "composite": 0.9078775236316956
+    },
+    {
+      "Model": "Logistic Regression",
+      "Accuracy": 0.87,
+      "F1": 0.8907563025210085,
+      "Precision": 0.8548387096774194,
+      "Recall": 0.9298245614035088,
+      "ROC-AUC": 0.9298245614035088,
+      "CV Score": 0.858,
+      "CV Std": 0.023151673805580475,
+      "composite": 0.8863548934004841
+    }
+  ],
+  "top_2_models": [
+    "Gradient Boosting",
+    "Random Forest"
+  ],
+  "models": [
+    {
+      "Model": "Random Forest",
+      "Accuracy": 0.88,
+      "F1": 0.9047619047619048,
+      "Precision": 0.8260869565217391,
+      "Recall": 1.0,
+      "ROC-AUC": 0.9310485516115871,
+      "CV Score": 0.892,
+      "CV Std": 0.011661903789690611,
+      "composite": 0.902712215320911
+    },
+    {
+      "Model": "Gradient Boosting",
+      "Accuracy": 0.88,
+      "F1": 0.9047619047619048,
+      "Precision": 0.8260869565217391,
+      "Recall": 1.0,
+      "ROC-AUC": 0.9355365157078743,
+      "CV Score": 0.892,
+      "CV Std": 0.017204650534085267,
+      "composite": 0.902712215320911
+    }
+  ],
+  "top2_comparison": [
+    {
+      "Model": "Gradient Boosting",
+      "Accuracy Before": 0.9,
+      "Accuracy After": 0.88,
+      "F1 Before": 0.9180327868852459,
+      "F1 After": 0.9047619047619048,
+      "Precision Before": 0.8615384615384616,
+      "Precision After": 0.8260869565217391,
+      "Recall Before": 0.9824561403508771,
+      "Recall After": 1.0,
+      "Composite Before": 0.9155068471936462,
+      "Composite After": 0.902712215320911
+    },
+    {
+      "Model": "Random Forest",
+      "Accuracy Before": 0.89,
+      "Accuracy After": 0.88,
+      "F1 Before": 0.912,
+      "F1 After": 0.9047619047619048,
+      "Precision Before": 0.8382352941176471,
+      "Precision After": 0.8260869565217391,
+      "Recall Before": 1.0,
+      "Recall After": 1.0,
+      "Composite Before": 0.9100588235294118,
+      "Composite After": 0.902712215320911
+    }
+  ],
+  "best_model": "Gradient Boosting (Baseline)",
+  "best_model_artifact": "models/gradient_boosting_baseline.joblib",
+  "best_model_target_artifact": "models/loyalty_best_model.joblib",
+  "best_accuracy": 0.9,
+  "best_f1": 0.9180327868852459,
+  "best_params": {},
+  "tuning_params": {
+    "Random Forest": {
+      "model__n_estimators": 500,
+      "model__min_samples_split": 5,
+      "model__min_samples_leaf": 4,
+      "model__max_features": "sqrt",
+      "model__max_depth": 16
+    },
+    "Gradient Boosting": {
+      "model__subsample": 0.7,
+      "model__n_estimators": 150,
+      "model__min_samples_leaf": 2,
+      "model__max_depth": 2,
+      "model__learning_rate": 0.03
+    }
+  },
+  "rf_top_features": [],
+  "eda_summary": {
+    "n_samples": 500,
+    "n_features": 8,
+    "class_distribution": {
+      "0": 213,
+      "1": 287
+    },
+    "class_balance_ratio": 1.3474,
+    "missing_percentage_by_feature": {
+      "Usage Duration": 0.0,
+      "Discount Influence": 0.0,
+      "Social Engagement": 0.0,
+      "Experience": 0.0,
+      "Peer Influence": 0.0,
+      "Brand": 0.0,
+      "Decision Factor": 0.0,
+      "Price Importance": 0.0
+    },
+    "top_5_brands": {
+      "Poco": 52,
+      "Google Pixel": 48,
+      "Realme": 47,
+      "Vivo": 46,
+      "Samsung": 42
+    }
+  },
+  "overfitting_check": {
+    "train_accuracy_best": 0.9525,
+    "test_accuracy_best": 0.9
+  },
+  "model_selection_justification": "Gradient Boosting (Baseline) achieved the highest held-out test accuracy; composite score was used as a tie-breaker."
+}
